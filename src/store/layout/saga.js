@@ -18,7 +18,7 @@ import {
 /**
  * Changes the body attribute
  */
-function changeBodyAttribute(attribute: string, value: string) {
+function changeBodyAttribute(attribute, value) {
   if (document.body) document.body.setAttribute(attribute, value)
   return true
 }
@@ -27,7 +27,7 @@ function changeBodyAttribute(attribute: string, value: string) {
  * Toggle the class on body
  * @param {*} cssClass
  */
-function manageBodyClass(cssClass: string, action = 'toggle') {
+function manageBodyClass(cssClass, action = 'toggle') {
   switch (action) {
     case 'add':
       if (document.body) document.body.classList.add(cssClass)
@@ -57,7 +57,7 @@ function* changeLayout({ payload: layout }) {
       yield put(changeTopbarThemeAction('light'))
     }
     yield call(changeBodyAttribute, 'data-layout', layout)
-  } catch (error) {}
+  } catch (error) { }
 }
 
 /**
@@ -67,18 +67,18 @@ function* changeLayout({ payload: layout }) {
 function* changeLayoutWidth({ payload: width }) {
   try {
     if (width === 'boxed') {
-      yield put(changeSidebarTypeAction('icon'))
+      yield put(changeSidebarTypeAction('icon', undefined))
       yield call(changeBodyAttribute, 'data-layout-size', width)
-      yield call(changeBodyAttribute, 'data-layout-scrollable', false)
+      yield call(changeBodyAttribute, 'data-layout-scrollable', 'false')
     } else if (width === 'scrollable') {
-      yield put(changeSidebarTypeAction('default'))
-      yield call(changeBodyAttribute, 'data-layout-scrollable', true)
+      yield put(changeSidebarTypeAction('default', undefined))
+      yield call(changeBodyAttribute, 'data-layout-scrollable', 'true')
     } else {
-      yield put(changeSidebarTypeAction('default'))
+      yield put(changeSidebarTypeAction('default', undefined))
       yield call(changeBodyAttribute, 'data-layout-size', width)
-      yield call(changeBodyAttribute, 'data-layout-scrollable', false)
+      yield call(changeBodyAttribute, 'data-layout-scrollable', 'false')
     }
-  } catch (error) {}
+  } catch (error) { }
 }
 
 /**
@@ -88,7 +88,7 @@ function* changeLayoutWidth({ payload: width }) {
 function* changeLeftSidebarTheme({ payload: theme }) {
   try {
     yield call(changeBodyAttribute, 'data-sidebar', theme)
-  } catch (error) {}
+  } catch (error) { }
 }
 
 /**
@@ -98,7 +98,7 @@ function* changeLeftSidebarTheme({ payload: theme }) {
 function* changeTopbarTheme({ payload: theme }) {
   try {
     yield call(changeBodyAttribute, 'data-topbar', theme)
-  } catch (error) {}
+  } catch (error) { }
 }
 
 /**
@@ -138,7 +138,7 @@ function* changeLeftSidebarType({ payload: { sidebarType, isMobile } }) {
           yield call(manageBodyClass, 'vertical-collpsed', 'remove')
         break
     }
-  } catch (error) {}
+  } catch (error) { }
 }
 
 /**
@@ -147,7 +147,7 @@ function* changeLeftSidebarType({ payload: { sidebarType, isMobile } }) {
 function* showRightSidebar() {
   try {
     yield call(manageBodyClass, 'right-bar-enabled', 'add')
-  } catch (error) {}
+  } catch (error) { }
 }
 
 /**

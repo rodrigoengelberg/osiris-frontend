@@ -14,7 +14,7 @@ import {
   GET_CATEGORIES,
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_FAIL,
-} from "./actionTypes"
+} from './actionTypes'
 
 export const getEvents = () => ({
   type: GET_EVENTS,

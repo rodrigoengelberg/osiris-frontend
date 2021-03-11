@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types'
-import React, { Component } from "react"
-import { withRouter } from "react-router-dom"
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
 class NonAuthLayout extends Component {
+  static propTypes: { children: PropTypes.Requireable<any>; location: PropTypes.Requireable<object> }
   constructor(props) {
     super(props)
     this.state = {}

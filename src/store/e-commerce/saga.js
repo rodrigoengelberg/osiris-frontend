@@ -90,7 +90,7 @@ function* fetchShops() {
 
 function* ecommerceSaga() {
   yield takeEvery(GET_PRODUCTS, fetchProducts)
-  //yield takeEvery(GET_PRODUCT_DETAIL, fetchProductDetail)
+  yield takeEvery(GET_PRODUCT_DETAIL, fetchProductDetail)
   yield takeEvery(GET_ORDERS, fetchOrders)
   yield takeEvery(GET_CART_DATA, fetchCartData)
   yield takeEvery(GET_CUSTOMERS, fetchCustomers)

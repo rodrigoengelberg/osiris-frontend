@@ -6,12 +6,14 @@ import { BrowserRouter } from 'react-router-dom'
 import './i18n'
 import { Provider } from 'react-redux'
 
+import store from './store'
+
 const app = (
-  // <Provider store={store}>
+  <Provider store={store}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  // </Provider>
+  </Provider>
 )
 
 ReactDOM.render(app, document.getElementById('root'))

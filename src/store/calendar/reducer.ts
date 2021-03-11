@@ -9,7 +9,7 @@ import {
   DELETE_EVENT_FAIL,
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_FAIL,
-} from "./actionTypes"
+} from './actionTypes'
 
 const INIT_STATE = {
   events: [],
@@ -46,7 +46,7 @@ const Calendar = (state = INIT_STATE, action) => {
     case UPDATE_EVENT_SUCCESS:
       return {
         ...state,
-        events: state.events.map(event =>
+        events: state.events.map((event: any) =>
           event.id.toString() === action.payload.id.toString()
             ? { event, ...action.payload }
             : event
@@ -62,8 +62,8 @@ const Calendar = (state = INIT_STATE, action) => {
     case DELETE_EVENT_SUCCESS:
       return {
         ...state,
-        events: state.events.filter(
-          event => event.id.toString() !== action.payload.id.toString()
+        events: state.events.filter((event: any) =>
+          event.id.toString() !== action.payload.id.toString()
         ),
       }
 

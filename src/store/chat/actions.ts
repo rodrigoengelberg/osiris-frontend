@@ -14,7 +14,7 @@ import {
   POST_ADD_MESSAGE,
   POST_ADD_MESSAGE_FAIL,
   POST_ADD_MESSAGE_SUCCESS,
-} from "./actionTypes"
+} from './actionTypes'
 
 export const getChats = () => ({
   type: GET_CHATS,

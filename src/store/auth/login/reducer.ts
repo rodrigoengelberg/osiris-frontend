@@ -4,10 +4,10 @@ import {
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
   API_ERROR,
-} from "./actionTypes"
+} from './actionTypes'
 
 const initialState = {
-  error: "",
+  error: '',
   loading: false,
 }
 

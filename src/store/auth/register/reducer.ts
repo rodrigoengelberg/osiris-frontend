@@ -2,7 +2,7 @@ import {
   REGISTER_USER,
   REGISTER_USER_SUCCESSFUL,
   REGISTER_USER_FAILED,
-} from "./actionTypes"
+} from './actionTypes'
 
 const initialState = {
   registrationError: null,

@@ -1,28 +1,29 @@
-import PropTypes from "prop-types"
-import React, { useEffect, useRef } from "react"
+import PropTypes from 'prop-types'
+import React, { useEffect, useRef } from 'react'
 
 // //Import Scrollbar
-import SimpleBar from "simplebar-react"
+import SimpleBar from 'simplebar-react'
 
 // MetisMenu
-import MetisMenu from "metismenujs"
-import { withRouter } from "react-router-dom"
-import { Link } from "react-router-dom"
+import MetisMenu from 'metismenujs'
+import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 //i18n
-import { withTranslation } from "react-i18next"
+import { withTranslation } from 'react-i18next'
 
 const SidebarContent = props => {
-  const ref = useRef()
+  let ref: any = ""
+  ref = useRef()
   // Use ComponentDidMount and ComponentDidUpdate method symultaniously
   useEffect(() => {
     const pathName = props.location.pathname
 
     const initMenu = () => {
       new MetisMenu("#side-menu")
-      let matchingMenuItem = null
-      const ul = document.getElementById("side-menu")
-      const items = ul.getElementsByTagName("a")
+      let matchingMenuItem: any = null
+      let ul = document.getElementById("side-menu")
+      const items = ul != null ? ul.getElementsByTagName("a") : []
       for (let i = 0; i < items.length; ++i) {
         if (pathName === items[i].pathname) {
           matchingMenuItem = items[i]

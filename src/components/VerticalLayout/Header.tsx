@@ -1,46 +1,66 @@
-import React, { useState } from "react"
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { connect } from "react-redux"
+import { connect } from 'react-redux'
+import { Row, Col } from 'reactstrap'
 
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
 
-// Redux Store
-import { showRightSidebarAction, toggleLeftmenu } from "../../store/actions"
-// reactstrap
-import { Row, Col, Dropdown, DropdownToggle, DropdownMenu } from "reactstrap"
+// Reactstrap
+import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap'
 
 // Import menuDropdown
-import LanguageDropdown from "../CommonForBoth/TopbarDropdown/LanguageDropdown"
-import NotificationDropdown from "../CommonForBoth/TopbarDropdown/NotificationDropdown"
-import ProfileMenu from "../CommonForBoth/TopbarDropdown/ProfileMenu"
+import LanguageDropdown from '../CommonForBoth/TopbarDropdown/LanguageDropdown'
+import NotificationDropdown from '../CommonForBoth/TopbarDropdown/NotificationDropdown'
+import ProfileMenu from '../CommonForBoth/TopbarDropdown/ProfileMenu'
 
-import megamenuImg from "../../assets/images/megamenu-img.png"
-import logo from "../../assets/images/logo-sm-light.png"
-import logoLight from "../../assets/images/logo-light.png"
-import logoLightSvg from "../../assets/images/logo-light.svg"
-import logoDark from "../../assets/images/logo-dark.png"
+import megamenuImg from '../../assets/images/megamenu-img.png'
+import logo from '../../assets/images/logo.svg'
+import logoLightPng from '../../assets/images/logo-light.png'
+import logoLightSvg from '../../assets/images/logo-light.svg'
+import logoDark from '../../assets/images/logo-dark.png'
 
 // import images
-import github from "../../assets/images/brands/github.png"
-import bitbucket from "../../assets/images/brands/bitbucket.png"
-import dribbble from "../../assets/images/brands/dribbble.png"
-import dropbox from "../../assets/images/brands/dropbox.png"
-import mail_chimp from "../../assets/images/brands/mail_chimp.png"
-import slack from "../../assets/images/brands/slack.png"
+import github from '../../assets/images/brands/github.png'
+import bitbucket from '../../assets/images/brands/bitbucket.png'
+import dribbble from '../../assets/images/brands/dribbble.png'
+import dropbox from '../../assets/images/brands/dropbox.png'
+import mail_chimp from '../../assets/images/brands/mail_chimp.png'
+import slack from '../../assets/images/brands/slack.png'
 
 //i18n
-import { withTranslation } from "react-i18next"
+import { withTranslation } from 'react-i18next'
+
+// Redux Store
+import {
+  showRightSidebarAction,
+  toggleLeftmenu,
+  changeSidebarType,
+} from '../../store/actions'
+
+interface Document {
+  exitFullscreen: () => void;
+  mozCancelFullScreen: () => void;
+  webkitExitFullscreen: () => void;
+  fullscreenElement: () => void;
+  mozFullScreenElement: () => void;
+  webkitFullscreenElement: () => void;
+}
 
 const Header = props => {
-  const [menu, setMenu] = useState(false)
-  const [isSearch, setSearch] = useState(false)
+  const [search, setsearch] = useState(false)
+  const [megaMenu, setmegaMenu] = useState(false)
   const [socialDrp, setsocialDrp] = useState(false)
 
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
   function toggleFullscreen() {
+
+    const document: any = window.document;
+
     if (
       !document.fullscreenElement &&
-      /* alternative standard method */ !document.mozFullScreenElement &&
+      /* alternative standard method */ !document.mozFullScreenElement &&  
       !document.webkitFullscreenElement
     ) {
       // current working methods
@@ -49,9 +69,8 @@ const Header = props => {
       } else if (document.documentElement.mozRequestFullScreen) {
         document.documentElement.mozRequestFullScreen()
       } else if (document.documentElement.webkitRequestFullscreen) {
-        document.documentElement.webkitRequestFullscreen(
-          Element.ALLOW_KEYBOARD_INPUT
-        )
+        document.documentElement.webkitRequestFullscreen()
+        //document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
       }
     } else {
       if (document.cancelFullScreen) {
@@ -61,6 +80,15 @@ const Header = props => {
       } else if (document.webkitCancelFullScreen) {
         document.webkitCancelFullScreen()
       }
+    }
+  }
+
+  function tToggle() {
+    props.toggleLeftmenu(!props.leftMenu)
+    if (props.leftSideBarType === "default") {
+      props.changeSidebarType("condensed", isMobile)
+    } else if (props.leftSideBarType === "condensed") {
+      props.changeSidebarType("default", isMobile)
     }
   }
   return (
@@ -83,19 +111,18 @@ const Header = props => {
                   <img src={logoLightSvg} alt="" height="22" />
                 </span>
                 <span className="logo-lg">
-                  <img src={logoLight} alt="" height="19" />
+                  <img src={logoLightPng} alt="" height="35" />
                 </span>
               </Link>
             </div>
 
             <button
               type="button"
-              className="btn btn-sm px-3 font-size-16 d-lg-none header-item waves-effect waves-light"
-              data-toggle="collapse"
               onClick={() => {
-                props.toggleLeftmenu(!props.leftMenu)
+                tToggle()
               }}
-              data-target="#topnav-menu-content"
+              className="btn btn-sm px-3 font-size-16 header-item waves-effect"
+              id="vertical-menu-btn"
             >
               <i className="fa fa-fw fa-bars"/>
             </button>
@@ -105,7 +132,7 @@ const Header = props => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Search..."
+                  placeholder={props.t("Search") + "..."}
                 />
                 <span className="bx bx-search-alt"/>
               </div>
@@ -113,14 +140,17 @@ const Header = props => {
 
             <Dropdown
               className="dropdown-mega d-none d-lg-block ms-2"
-              isOpen={menu}
-              toggle={() => setMenu(!menu)}
+              isOpen={megaMenu}
+              toggle={() => {
+                setmegaMenu(!megaMenu)
+              }}
             >
               <DropdownToggle
                 className="btn header-item waves-effect"
                 caret
                 tag="button"
               >
+                {" "}
                 {props.t("Mega Menu")} <i className="mdi mdi-chevron-down"/>
               </DropdownToggle>
               <DropdownMenu className="dropdown-megamenu">
@@ -258,20 +288,21 @@ const Header = props => {
               </DropdownMenu>
             </Dropdown>
           </div>
-
           <div className="d-flex">
             <div className="dropdown d-inline-block d-lg-none ms-2">
               <button
+                onClick={() => {
+                  setsearch(!search)
+                }}
                 type="button"
                 className="btn header-item noti-icon waves-effect"
                 id="page-header-search-dropdown"
-                onClick={() => setSearch(!isSearch)}
               >
                 <i className="mdi mdi-magnify"/>
               </button>
               <div
                 className={
-                  isSearch
+                  search
                     ? "dropdown-menu dropdown-menu-lg dropdown-menu-right p-0 show"
                     : "dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
                 }
@@ -283,7 +314,7 @@ const Header = props => {
                       <input
                         type="text"
                         className="form-control"
-                        placeholder={props.t("Search") + "..."}
+                        placeholder="Search ..."
                         aria-label="Recipient's username"
                       />
                       <div className="input-group-append">
@@ -308,7 +339,6 @@ const Header = props => {
             >
               <DropdownToggle
                 className="btn header-item noti-icon waves-effect"
-                caret
                 tag="button"
               >
                 <i className="bx bx-customize"/>
@@ -335,6 +365,7 @@ const Header = props => {
                       </Link>
                     </Col>
                   </Row>
+
                   <Row className="no-gutters">
                     <Col>
                       <Link className="dropdown-icon-item" to="#">
@@ -362,10 +393,10 @@ const Header = props => {
             <div className="dropdown d-none d-lg-inline-block ms-1">
               <button
                 type="button"
-                className="btn header-item noti-icon waves-effect"
                 onClick={() => {
                   toggleFullscreen()
                 }}
+                className="btn header-item noti-icon waves-effect"
                 data-toggle="fullscreen"
               >
                 <i className="bx bx-fullscreen"/>
@@ -373,14 +404,15 @@ const Header = props => {
             </div>
 
             <NotificationDropdown />
-
             <ProfileMenu />
 
-            <div className="dropdown d-inline-block">
+            <div
+              onClick={() => {
+                props.showRightSidebarAction(!props.showRightSidebar)
+              }}
+              className="dropdown d-inline-block"
+            >
               <button
-                onClick={() => {
-                  props.showRightSidebarAction(!props.showRightSidebar)
-                }}
                 type="button"
                 className="btn header-item noti-icon right-bar-toggle waves-effect"
               >
@@ -395,7 +427,9 @@ const Header = props => {
 }
 
 Header.propTypes = {
+  changeSidebarType: PropTypes.func,
   leftMenu: PropTypes.any,
+  leftSideBarType: PropTypes.any,
   showRightSidebar: PropTypes.any,
   showRightSidebarAction: PropTypes.func,
   t: PropTypes.any,
@@ -403,11 +437,17 @@ Header.propTypes = {
 }
 
 const mapStatetoProps = state => {
-  const { layoutType, showRightSidebar, leftMenu } = state.Layout
-  return { layoutType, showRightSidebar, leftMenu }
+  const {
+    layoutType,
+    showRightSidebar,
+    leftMenu,
+    leftSideBarType,
+  } = state.Layout
+  return { layoutType, showRightSidebar, leftMenu, leftSideBarType }
 }
 
 export default connect(mapStatetoProps, {
   showRightSidebarAction,
   toggleLeftmenu,
+  changeSidebarType,
 })(withTranslation()(Header))

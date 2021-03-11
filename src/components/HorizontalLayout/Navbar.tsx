@@ -1,13 +1,13 @@
-import PropTypes from "prop-types"
-import React, { useState, useEffect } from "react"
-import { Row, Col, Collapse } from "reactstrap"
-import { Link, withRouter } from "react-router-dom"
-import classname from "classnames"
+import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react'
+import { Row, Col, Collapse } from 'reactstrap'
+import { Link, withRouter } from 'react-router-dom'
+import classname from 'classnames'
 
 //i18n
-import { withTranslation } from "react-i18next"
+import { withTranslation } from 'react-i18next'
 
-import { connect } from "react-redux"
+import { connect } from 'react-redux'
 
 const Navbar = props => {
   const [dashboard, setdashboard] = useState(false)
@@ -33,7 +33,7 @@ const Navbar = props => {
 
   useEffect(() => {
     var matchingMenuItem = null
-    var ul = document.getElementById("navigation")
+    var ul = ul != null ? document.getElementById("navigation") : ''
     var items = ul.getElementsByTagName("a")
     for (var i = 0; i < items.length; ++i) {
       if (props.location.pathname === items[i].pathname) {

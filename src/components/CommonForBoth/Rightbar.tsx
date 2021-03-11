@@ -24,23 +24,7 @@ import layout1 from '../../assets/images/layouts/layout-1.jpg'
 import layout2 from '../../assets/images/layouts/layout-2.jpg'
 import layout3 from '../../assets/images/layouts/layout-3.jpg'
 
-interface IProps {
-  leftSideBarTheme: string,
-  changeSidebarTheme: any,
-  showRightSidebarAction: any,
-  layoutType: string,
-  changeLayout: any,
-  layoutWidth: string,
-  changeLayoutWidth: any,
-  topbarTheme: string,
-  changeTopbarTheme: any,
-  leftSideBarType: string,
-  changeSidebarType: any,
-  isPreloader: boolean,
-  changePreloader: any
-}
-
-const RightSidebar = (props: IProps) => {
+const RightSidebar = props => {
   return (
     <React.Fragment>
       <div className='right-bar'>

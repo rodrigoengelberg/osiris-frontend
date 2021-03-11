@@ -9,7 +9,7 @@ import {
   GET_MESSAGES_FAIL,
   POST_ADD_MESSAGE_SUCCESS,
   POST_ADD_MESSAGE_FAIL,
-} from "./actionTypes"
+} from './actionTypes'
 
 const INIT_STATE = {
   chats: [],

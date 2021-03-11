@@ -158,6 +158,7 @@
     "@types/react-redux": "^7.1.16",
     "@types/react-router": "^5.1.12",
     "@types/react-router-dom": "^5.1.7",
+    "@types/redux": "^3.6.0",
     "@vtaits/react-color-picker": "^0.1.1",
     "eslint-config-standard-react": "^9.2.0",
     "eslint-plugin-react": "^7.20.6",

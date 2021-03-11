@@ -2,7 +2,7 @@ import {
   FORGET_PASSWORD,
   FORGET_PASSWORD_SUCCESS,
   FORGET_PASSWORD_ERROR,
-} from "./actionTypes"
+} from './actionTypes'
 
 export const userForgetPassword = (user, history) => {
   return {

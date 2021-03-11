@@ -1,8 +1,8 @@
-import firebase from "firebase/app"
+import firebase from 'firebase/app'
 
 // Add the Firebase products that you want to use
-import "firebase/auth"
-import "firebase/firestore"
+import 'firebase/auth'
+import 'firebase/firestore'
 
 class FirebaseAuthBackend {
   constructor(firebaseConfig) {
@@ -11,9 +11,9 @@ class FirebaseAuthBackend {
       firebase.initializeApp(firebaseConfig)
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          localStorage.setItem("authUser", JSON.stringify(user))
+          localStorage.setItem('authUser', JSON.stringify(user))
         } else {
-          localStorage.removeItem("authUser")
+          localStorage.removeItem('authUser')
         }
       })
     }
@@ -85,7 +85,7 @@ class FirebaseAuthBackend {
         .auth()
         .sendPasswordResetEmail(email, {
           url:
-            window.location.protocol + "//" + window.location.host + "/login",
+            window.location.protocol + '//' + window.location.host + '/login',
         })
         .then(() => {
           resolve(true)
@@ -118,9 +118,9 @@ class FirebaseAuthBackend {
    */
   socialLoginUser = (data, type) => {
     let credential = {}
-    if (type === "google") {
+    if (type === 'google') {
       credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.token)
-    } else if (type === "facebook") {
+    } else if (type === 'facebook') {
       credential = firebase.auth.FacebookAuthProvider.credential(data.token)
     }
     return new Promise((resolve, reject) => {
@@ -139,7 +139,7 @@ class FirebaseAuthBackend {
   }
 
   addNewUserToFirestore = (user) => {
-    const collection = firebase.firestore().collection("users")
+    const collection = firebase.firestore().collection('users')
     const { profile } = user.additionalUserInfo
     const details = {
       firstName: profile.given_name ? profile.given_name : profile.first_name,
@@ -155,15 +155,15 @@ class FirebaseAuthBackend {
   }
 
   setLoggeedInUser = user => {
-    localStorage.setItem("authUser", JSON.stringify(user))
+    localStorage.setItem('authUser', JSON.stringify(user))
   }
 
   /**
    * Returns the authenticated user
    */
   getAuthenticatedUser = () => {
-    if (!localStorage.getItem("authUser")) return null
-    return JSON.parse(localStorage.getItem("authUser"))
+    if (!localStorage.getItem('authUser')) return null
+    return JSON.parse(localStorage.getItem('authUser'))
   }
 
   /**
